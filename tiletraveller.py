@@ -5,6 +5,7 @@ EAST = 'e'
 SOUTH = 's'
 WEST = 'w'
 
+
 def move(direction, col, row):
     ''' Returns updated col, row given the direction '''
     if direction == NORTH:
@@ -37,9 +38,22 @@ def print_directions(directions_str):
             print("(W)est", end='')
         first = False
     print(".")
+
+
+def check_for_lever(col,row):
+    if (col == 1 and row == 2) or (col == 2 and row == 2) or (col == 2 and row == 3) or (col == 3 and row == 2):
+        pull_lever = input("Pull a lever (y/n): ")
+        pull_lever = pull_lever.lower()
+        if pull_lever == "y":
+            return 1
+        else:
+            return 0
+    else:
+        return 0
         
-def find_directions(col, row):
+def find_directions(total_coins, col, row):
     ''' Returns valid directions as a string given the supplied location '''
+    total_coins += check_for_lever(col, row)
     if col == 1 and row == 1:   # (1,1)
         valid_directions = NORTH
     elif col == 1 and row == 2: # (1,2)
@@ -76,9 +90,10 @@ def play_one_move(col, row, valid_directions):
 victory = False
 row = 1
 col = 1
+total_coins = 0
 
 while not victory:
-    valid_directions = find_directions(col, row)
+    valid_directions = find_directions(total_coins, col, row)
     print_directions(valid_directions)
     victory, col, row = play_one_move(col, row, valid_directions)
-print("Victory!")
+print("Victory! Total coins {}.".format(total_coins))
