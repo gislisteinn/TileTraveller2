@@ -49,12 +49,13 @@ def total_coins(coin_total):
         coin_amount = coin_total
         return coin_amount
     else:
-        return 0
+        coin_amount = coin_total
+        return coin_amount
 
         
-def find_directions(col, row):
+def find_directions(col, row, coin_total):
     ''' Returns valid directions as a string given the supplied location '''
-    coin_total = 0
+    
     if col == 1 and row == 1:   # (1,1)
         valid_directions = NORTH
     elif col == 1 and row == 2: # (1,2)
@@ -95,11 +96,11 @@ def play_one_move(col, row, valid_directions):
 victory = False
 row = 1
 col = 1
-
+coin_total = 0
 
 
 while not victory:
-    valid_directions, coin_total = find_directions(col, row)
+    valid_directions, coin_total = find_directions(col, row, coin_total)
     print_directions(valid_directions)
     victory, col, row = play_one_move(col, row, valid_directions)
 print("Victory! Total coins {}.".format(coin_total))
